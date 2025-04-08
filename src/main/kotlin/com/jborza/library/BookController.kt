@@ -17,7 +17,7 @@ class BookController (private val bookService: BookService) {
     @GetMapping("/create")
     fun createBookForm(model: Model): String {
         model.addAttribute("book", Book())
-        return "createBook"
+        return "editBook"
     }
 
     @PostMapping
