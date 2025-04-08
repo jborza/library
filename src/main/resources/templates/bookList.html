@@ -5,6 +5,29 @@
 </head>
 <body>
 <h1>Books</h1>
+
+<!-- Filter Form -->
+<form th:action="@{/books}" method="get">
+    <label for="platform">Filter by Platform:</label>
+    <select name="platform" id="platform">
+        <option value="">All</option>
+        <option th:each="platform : ${T(com.jborza.library.Platform).values()}"
+                th:value="${platform}" th:text="${platform}"></option>
+    </select>
+
+    <label for="status">Filter by Status:</label>
+    <select name="status" id="status">
+        <option value="">All</option>
+        <option value="currently-reading">Currently Reading</option>
+        <option value="to-read">To Read</option>
+        <option value="read">Read</option>
+        <option value="wishlist">Wishlist</option>
+    </select>
+
+    <button type="submit">Filter</button>
+</form>
+
+<!-- Book list -->
 <table>
     <tr>
         <th>Title</th>

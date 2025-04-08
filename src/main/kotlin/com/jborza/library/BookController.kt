@@ -3,16 +3,33 @@ package com.jborza.library
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import com.jborza.library.Book
 
 @Controller
 @RequestMapping("/books")
 class BookController (private val bookService: BookService) {
+
+
+    //@GetMapping("/books")
+    @GetMapping
+    fun listBooks(
+        @RequestParam("platform", required = false) platform: Platform?,
+        @RequestParam("status", required = false) status: String?,
+        model: Model
+    ): String {
+        println("Received GET request for /books with platform=$platform and status=$status")
+        val books = bookService.getBooks(platform, status)
+        model.addAttribute("books", books)
+        return "bookList"
+    }
+
+
+    /*
     @GetMapping
     fun listBooks(model: Model): String {
         model.addAttribute("books", bookService.getAllBooks())
         return "bookList"
     }
+     */
 
     @GetMapping("/create")
     fun createBookForm(model: Model): String {
