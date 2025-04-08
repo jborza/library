@@ -1,9 +1,6 @@
 package com.jborza.library
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
 data class Book(
@@ -12,7 +9,8 @@ data class Book(
     val id: Long = 0,
     val title: String = "",
     val author: String = "",
-    val platform: String = "",
+    @Enumerated(EnumType.STRING)
+    val platform: Platform = Platform.PHYSICAL,
     val webLink: String = "",
     val status: String = ""
 )

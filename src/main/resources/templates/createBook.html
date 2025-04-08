@@ -16,7 +16,10 @@
     </div>
     <div>
         <label>Platform</label>
-        <input type="text" th:field="*{platform}" />
+        <select th:field="*{platform}">
+            <option th:each="platform : ${T(com.jborza.library.Platform).values()}"
+                    th:value="${platform}" th:text="${platform}"></option>
+        </select>
     </div>
     <div>
         <label>Web Link</label>
