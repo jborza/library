@@ -12,4 +12,8 @@ class BookService(private val bookRepository: BookRepository) {
     fun saveBook(book: Book): Book = bookRepository.save(book)
 
     fun deleteBook(id: Long) = bookRepository.deleteById(id)
+
+    fun saveBooks(books: List<Book>) {
+        bookRepository.saveAll(books)
+    }
 }

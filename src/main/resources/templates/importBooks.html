@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Import Books</title>
+</head>
+<body>
+<h1>Import Books</h1>
+<p th:text="${message}" style="color: green;"></p>
+<form th:action="@{/books/import}" method="post" enctype="multipart/form-data">
+    <div>
+        <label>Select CSV File:</label>
+        <input type="file" name="file" accept=".csv" required />
+    </div>
+    <div>
+        <button type="submit">Upload</button>
+    </div>
+</form>
+<a href="/books">Back to list</a>
+</body>
+</html>
