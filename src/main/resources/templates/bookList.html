@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Library Management System</title>
+</head>
+<body>
+<h1>Books</h1>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Platform</th>
+        <th>Web Link</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.platform}"></td>
+        <td><a th:href="${book.webLink}" th:text="${book.webLink}"></a></td>
+        <td th:text="${book.status}"></td>
+        <td>
+            <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a>
+            <form th:action="@{/books/delete/{id}(id=${book.id})}" method="post" style="display:inline">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a href="/books/create">Add new book</a>
+</body>
+</html>
