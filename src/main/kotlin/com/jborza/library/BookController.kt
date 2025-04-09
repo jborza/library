@@ -17,7 +17,10 @@ class BookController (private val bookService: BookService) {
         model: Model
     ): String {
         println("Received GET request for /books with platform=$platform and status=$status")
-        val books = bookService.getBooks(platform, status)
+        // Convert empty strings to null
+        val normalizedStatus = status?.takeIf { it.isNotBlank() }
+
+        val books = bookService.getBooks(platform, normalizedStatus)
         model.addAttribute("books", books)
         return "bookList"
     }
