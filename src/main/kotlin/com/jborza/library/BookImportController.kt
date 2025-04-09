@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -63,5 +64,12 @@ class BookImportController(private val bookService: BookService) {
             bookshelves.contains("currently-reading", ignoreCase = true) -> "currently-reading"
             else -> "unknown"
         }
+    }
+
+    @PostMapping("/books/import_notes")
+    fun importBooksFromNotes(@RequestParam("notes") notes: String, redirectAttributes: RedirectAttributes): String {
+        bookService.importBooksFromNotes(notes)
+        redirectAttributes.addFlashAttribute("successMessage", "Books imported successfully!")
+        return "redirect:/books"
     }
 }

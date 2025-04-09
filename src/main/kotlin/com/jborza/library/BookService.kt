@@ -26,4 +26,23 @@ class BookService(private val bookRepository: BookRepository) {
             else -> emptyList() // This case is logically unreachable
         }
     }
+
+    fun importBooksFromNotes(notes: String) {
+        val parser = BookParser()
+        val parsedBooks = parser.parseNotes(notes)
+
+        for (parsedBook in parsedBooks) {
+            val book = Book(
+                title = parsedBook.title,
+                author = parsedBook.author,
+                platform = Platform.PHYSICAL, // Default platform
+                status = "Wishlist",         // Default status
+                webLink = ""               // Optional field
+            )
+            // Avoid duplicates by checking if a book with the same title and author exists
+            if (!bookRepository.existsByTitleAndAuthor(book.title, book.author)) {
+                bookRepository.save(book)
+            }
+        }
+    }
 }

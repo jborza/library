@@ -15,6 +15,14 @@
         <button type="submit">Upload</button>
     </div>
 </form>
+<hr />
+<h1>Import Books from Notes</h1>
+<form th:action="@{/books/import_notes}" method="post">
+    <label for="notes">Paste your notes:</label>
+    <br />
+    <textarea id="notes" name="notes" rows="10" cols="50" placeholder="- Title (Author)\n- Title - Author"></textarea>
+    <button type="submit">Import</button>
+</form>
 <a href="/books">Back to list</a>
 </body>
 </html>
