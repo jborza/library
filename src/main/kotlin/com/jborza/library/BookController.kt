@@ -51,7 +51,7 @@ class BookController (private val bookService: BookService,
     @GetMapping("/create")
     fun createBookForm(model: Model): String {
         model.addAttribute("book", Book())
-        return "editBook"
+        return "createBook"
     }
 
     @PostMapping
@@ -69,7 +69,8 @@ class BookController (private val bookService: BookService,
 
     @PostMapping("/update/{id}")
     fun updateBook(@PathVariable id: Long, @ModelAttribute book: Book): String {
-        if (bookService.getBookById(id) != null) {
+        val existingBook = bookService.getBookById(id)
+        if (existingBook != null) {
             bookService.saveBook(book.copy(id = id))
         }
         return "redirect:/books"
