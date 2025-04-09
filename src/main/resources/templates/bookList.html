@@ -26,6 +26,11 @@
         <option value="read" th:selected="${status == 'read'}">Read</option>
     </select>
 
+    <label for="status">Filter by Author:</label>
+    <!-- TODO introduce a dropdown -->
+    <input type="text" id="author" name="author" th:value="${author ?: ''}" />
+
+
     <button type="submit">Filter</button>
 </form>
 

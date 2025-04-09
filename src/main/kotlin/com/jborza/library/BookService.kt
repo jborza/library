@@ -17,12 +17,16 @@ class BookService(private val bookRepository: BookRepository) {
         bookRepository.saveAll(books)
     }
 
-    fun getBooks(platform: Platform?, status: String?): List<Book> {
+    fun getBooks(platform: Platform?, status: String?, author: String?): List<Book> {
         return when {
-            platform == null && status == null -> bookRepository.findAll()
-            platform != null && status == null -> bookRepository.findByPlatform(platform)
-            platform == null && status != null -> bookRepository.findByStatus(status)
-            platform != null && status != null -> bookRepository.findByPlatformAndStatus(platform, status)
+            platform == null && status == null && author == null -> bookRepository.findAll()
+            platform != null && status == null && author == null -> bookRepository.findByPlatform(platform)
+            platform == null && status != null && author == null -> bookRepository.findByStatus(status)
+            platform != null && status != null && author == null -> bookRepository.findByPlatformAndStatus(platform, status)
+            platform == null && status == null && author != null -> bookRepository.findByAuthor(author)
+            platform != null && status == null && author != null -> bookRepository.findByPlatformAndAuthor(platform, author)
+            platform == null && status != null && author != null -> bookRepository.findByStatusAndAuthor(status, author)
+            platform != null && status != null && author != null -> bookRepository.findByPlatformAndStatusAndAuthor(platform, status, author)
             else -> emptyList() // This case is logically unreachable
         }
     }
