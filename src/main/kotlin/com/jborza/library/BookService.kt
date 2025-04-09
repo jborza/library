@@ -49,4 +49,8 @@ class BookService(private val bookRepository: BookRepository) {
             }
         }
     }
+
+    fun getAllAuthors(): List<String> {
+        return bookRepository.findAllAuthors()
+    }
 }

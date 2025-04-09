@@ -25,9 +25,16 @@ class BookController (private val bookService: BookService,
         val enumPlatform = platform?.takeIf { it.isNotBlank() }?.let { Platform.valueOf(it) }
 
         val books = bookService.getBooks(enumPlatform, normalizedStatus, normalizedAuthor)
+
+        // Fetch unique authors for the dropdown
+        val authors = bookService.getAllAuthors()
+
         model.addAttribute("books", books)
         model.addAttribute("platform", enumPlatform)
         model.addAttribute("status", status)
+        model.addAttribute("authors", authors) // Pass the list of unique authors
+        model.addAttribute("selectedAuthor", normalizedAuthor) // Keep track of the selected author
+
         return "bookList"
     }
 
