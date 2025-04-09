@@ -27,7 +27,7 @@ class BookController (private val bookService: BookService,
         val books = bookService.getBooks(enumPlatform, normalizedStatus, normalizedAuthor)
 
         // Fetch unique authors for the dropdown
-        val authors = bookService.getAllAuthors()
+        val authors = books.map { it.author }.toSet().sorted()
 
         model.addAttribute("books", books)
         model.addAttribute("platform", enumPlatform)
