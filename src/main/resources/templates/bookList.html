@@ -34,11 +34,10 @@
     <h1>Your Book List</h1>
     <div th:each="book : ${books}" class="book-item">
         <div class="book-thumbnail">
-            <img alt="Book cover for [[${book.title}]]" />
-            <!-- add book.imageUrl in a moment -->
+            <img th:src="${book.imageUrl != null ? book.imageUrl : '/images/placeholder.jpg'}" alt="Book cover for [[${book.title}]]" />
         </div>
         <div class="book-details">
-            <h2 class="book-title" th:text="${book.title}"></h2>
+            <a th:href="${book.webLink}"><h2 class="book-title" th:text="${book.title}"></h2></a>
             <p class="book-author">
                 by <span th:text="${book.author}"></span>
             </p>
@@ -47,10 +46,16 @@
                 Status: <span th:text="${book.status}"></span>
             </p>
         </div>
+        <div class="book-actions">
+            <a th:href="@{/books/edit/{id}(id=${book.id})}" class="button edit-button">Edit</a>
+            <a th:href="@{/books/delete/{id}(id=${book.id})}" class="button delete-button">Delete</a>
+        </div>
     </div>
 </div>
 
 <a href="/books/create">Add new book</a> <br />
-<a href="/books/import">Import Books</a>
+<a href="/books/import">Import Books</a> <br />
+<a href="/books/collect-thumbnails">Collect thumbnails</a> <br />
+
 </body>
 </html>

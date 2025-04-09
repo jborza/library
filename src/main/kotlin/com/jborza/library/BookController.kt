@@ -3,13 +3,14 @@ package com.jborza.library
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @Controller
 @RequestMapping("/books")
-class BookController (private val bookService: BookService) {
-
-
-    //@GetMapping("/books")
+class BookController (private val bookService: BookService,
+    private val thumbnailService: ThumbnailService,
+    private val bookRepository: BookRepository
+) {
     @GetMapping
     fun listBooks(
         @RequestParam("platform", required = false) platform: String?,
@@ -60,6 +61,5 @@ class BookController (private val bookService: BookService) {
         bookService.deleteBook(id)
         return "redirect:/books"
     }
-
 
 }
