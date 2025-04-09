@@ -16,6 +16,7 @@ class BookController (private val bookService: BookService,
         @RequestParam("platform", required = false) platform: String?,
         @RequestParam("status", required = false) status: String?,
         @RequestParam("author", required = false) author: String?,
+        @RequestParam("title", required = false) title: String?,
         model: Model
     ): String {
         println("Received GET request for /books with platform=$platform and status=$status")
@@ -26,16 +27,25 @@ class BookController (private val bookService: BookService,
 
         val books = bookService.getBooks(enumPlatform, normalizedStatus, normalizedAuthor)
 
-        // Fetch unique authors for the dropdown
-        val authors = books.map { it.author }.toSet().sorted()
+        // do title filtering on the server, not in the database
+        val filteredBooks = filterByTitle(books, title)
 
-        model.addAttribute("books", books)
+        // Fetch unique authors for the dropdown
+        val authors = filteredBooks.map { it.author }.toSet().sorted()
+
+        model.addAttribute("books", filteredBooks)
         model.addAttribute("platform", enumPlatform)
         model.addAttribute("status", status)
         model.addAttribute("authors", authors) // Pass the list of unique authors
         model.addAttribute("selectedAuthor", normalizedAuthor) // Keep track of the selected author
 
         return "bookList"
+    }
+
+    fun filterByTitle(books : List<Book>, title: String?): List<Book> {
+        if(title == null)
+            return books
+        return books.filter { book -> book.title.contains(title, ignoreCase = true) }
     }
 
     @GetMapping("/create")

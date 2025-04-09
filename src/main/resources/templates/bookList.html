@@ -37,6 +37,10 @@
                 th:selected="${author == selectedAuthor}"
                 ></option>
     </select>
+
+    <label for="title">Search Books:</label>
+    <input type="text" id="title" name="title" th:value="${title ?: ''}" placeholder="Enter book title" />
+
     <button type="submit">Filter</button>
 </form>
 
