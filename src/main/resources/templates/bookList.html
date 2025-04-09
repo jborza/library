@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Library Management System</title>
+    <link rel="stylesheet"  th:href="@{/styles.css}">
 </head>
 <body>
 <h1>Books</h1>
@@ -29,30 +30,26 @@
 </form>
 
 <!-- Book list -->
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Platform</th>
-        <th>Web Link</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.title}"></td>
-        <td th:text="${book.author}"></td>
-        <td th:text="${book.platform}"></td>
-        <td><a th:href="${book.webLink}" th:text="${book.webLink}"></a></td>
-        <td th:text="${book.status}"></td>
-        <td>
-            <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a>
-            <form th:action="@{/books/delete/{id}(id=${book.id})}" method="post" style="display:inline">
-                <input type="hidden" name="_method" value="delete"/>
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-</table>
+<div class="book-list">
+    <h1>Your Book List</h1>
+    <div th:each="book : ${books}" class="book-item">
+        <div class="book-thumbnail">
+            <img alt="Book cover for [[${book.title}]]" />
+            <!-- add book.imageUrl in a moment -->
+        </div>
+        <div class="book-details">
+            <h2 class="book-title" th:text="${book.title}"></h2>
+            <p class="book-author">
+                by <span th:text="${book.author}"></span>
+            </p>
+            <p class="book-meta">
+                Platform: <span th:text="${book.platform.name()}"></span> |
+                Status: <span th:text="${book.status}"></span>
+            </p>
+        </div>
+    </div>
+</div>
+
 <a href="/books/create">Add new book</a> <br />
 <a href="/books/import">Import Books</a>
 </body>

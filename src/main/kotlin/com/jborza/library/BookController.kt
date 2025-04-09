@@ -28,15 +28,6 @@ class BookController (private val bookService: BookService) {
         return "bookList"
     }
 
-
-    /*
-    @GetMapping
-    fun listBooks(model: Model): String {
-        model.addAttribute("books", bookService.getAllBooks())
-        return "bookList"
-    }
-     */
-
     @GetMapping("/create")
     fun createBookForm(model: Model): String {
         model.addAttribute("book", Book())
@@ -69,5 +60,6 @@ class BookController (private val bookService: BookService) {
         bookService.deleteBook(id)
         return "redirect:/books"
     }
+
 
 }
