@@ -8,4 +8,5 @@ interface BookRepository : JpaRepository<Book, Long> {
     fun findByPlatformAndStatus(platform: Platform, status: String): List<Book>
     fun existsByTitleAndAuthor(title: String, author:String) : Boolean
     fun findAllByWebLinkIsNotNull(): List<Book>
+    fun findAllByWebLinkIsNotNullAndImageUrlIsNull(): List<Book>
 }

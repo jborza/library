@@ -12,14 +12,18 @@ class BookThumbnailController(
 ) {
     @GetMapping("/books/collect-thumbnails")
     fun collectThumbnails(redirectAttributes: RedirectAttributes): String {
-        val booksWithWebLinks = bookRepository.findAllByWebLinkIsNotNull()
-
+        val booksWithWebLinks = bookRepository.findAllByWebLinkIsNotNullAndImageUrlIsNull()
+        //get rid of books with filled imageUrl
+        //val booksWithoutThumbnails = booksWithWebLinks.filter { it.imageUrl == null }
         for (book in booksWithWebLinks) {
+            // only do this if imageUrl is empty
             val imageUrl = thumbnailService.downloadThumbnail(book.title, book.author, book.webLink!!)
             if (imageUrl != null) {
                 book.imageUrl = imageUrl
                 bookRepository.save(book)
             }
+            //pause for several seconds
+            Thread.sleep(2000);
         }
 
         redirectAttributes.addFlashAttribute("successMessage", "Thumbnails collected successfully!")
