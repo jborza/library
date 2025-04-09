@@ -10,18 +10,19 @@
 <form th:action="@{/books}" method="get">
     <label for="platform">Filter by Platform:</label>
     <select name="platform" id="platform">
-        <option value="">All</option>
-        <option th:each="platform : ${T(com.jborza.library.Platform).values()}"
-                th:value="${platform}" th:text="${platform}"></option>
+        <option value="" th:selected="${platform == null}">All</option>
+        <option th:each="platformOption : ${T(com.jborza.library.Platform).values()}"
+                th:value="${platformOption.name()}"
+                th:text="${platformOption.name()}"
+                th:selected="${platformOption == platform}"></option>
     </select>
 
     <label for="status">Filter by Status:</label>
     <select name="status" id="status">
-        <option value="">All</option>
-        <option value="currently-reading">Currently Reading</option>
-        <option value="to-read">To Read</option>
-        <option value="read">Read</option>
-        <option value="wishlist">Wishlist</option>
+        <option value="" th:selected="${status == null}">All</option>
+        <option value="currently-reading" th:selected="${status == 'currently-reading'}">Currently Reading</option>
+        <option value="to-read" th:selected="${status == 'to-read'}">To Read</option>
+        <option value="read" th:selected="${status == 'read'}">Read</option>
     </select>
 
     <button type="submit">Filter</button>

@@ -12,16 +12,19 @@ class BookController (private val bookService: BookService) {
     //@GetMapping("/books")
     @GetMapping
     fun listBooks(
-        @RequestParam("platform", required = false) platform: Platform?,
+        @RequestParam("platform", required = false) platform: String?,
         @RequestParam("status", required = false) status: String?,
         model: Model
     ): String {
         println("Received GET request for /books with platform=$platform and status=$status")
         // Convert empty strings to null
         val normalizedStatus = status?.takeIf { it.isNotBlank() }
+        val enumPlatform = platform?.takeIf { it.isNotBlank() }?.let { Platform.valueOf(it) }
 
-        val books = bookService.getBooks(platform, normalizedStatus)
+        val books = bookService.getBooks(enumPlatform, normalizedStatus)
         model.addAttribute("books", books)
+        model.addAttribute("platform", enumPlatform)
+        model.addAttribute("status", status)
         return "bookList"
     }
 
